@@ -303,12 +303,15 @@ void Shell::run_function(std::vector<std::string> cmd)
 		{
 			if (cmd[1] == "-h")
 			{
+				std::cout << "\n" << cmd[0] << " " << "[nazwa_procesu]\n";
 				std::cout << "\n" << cmd[0] << " " << "[nazwa_procesu][nazwa_pliku]\n";
+				std::cout << "\n" << cmd[0] << " " << "[nazwa_procesu][nazwa_pliku][priorytet]\n";
 			}
 			else
 			{
-				std::cout << red << "[SHELL]" << white << " - Niepoprawny argument!" << std::endl;
-				std::cout << "          Wprowadz " << cmd[0] << " -h, aby uzyskac pomoc." << std::endl;
+				drzewko.fork(&drzewko.process, cmd[1]);
+				/*std::cout << red << "[SHELL]" << white << " - Niepoprawny argument!" << std::endl;
+				std::cout << "          Wprowadz " << cmd[0] << " -h, aby uzyskac pomoc." << std::endl;*/
 			}
 		}
 		else if (cmd.size() == 3)
@@ -331,6 +334,27 @@ void Shell::run_function(std::vector<std::string> cmd)
 				std::cout << "          Wprowadz " << cmd[0] << " -h, aby uzyskac pomoc." << std::endl;
 			}
 		}
+		else if (cmd.size() == 4) 
+		{
+			if (/*sprawdzenie poprawnosci nazwy pliku i procesu*/ running)
+			{
+				drzewko.fork(&drzewko.process, cmd[1], cmd[2], stoi(cmd[3]));
+			}
+			else if (/*plik nie istnieje lub cos innego mu nie gra*/ running)
+			{
+				std::cout << red << "[SHELL]" << white << " - Plik jest niepoprawny!" << std::endl;
+			}
+			else if (/*proces juz istnieje*/ running)
+			{
+				std::cout << red << "[SHELL]" << white << " - Proces o tej nazwie juz istnieje!" << std::endl;
+			}
+			else
+			{
+				std::cout << red << "[SHELL]" << white << " - Niepoprawny argument!" << std::endl;
+				std::cout << "          Wprowadz " << cmd[0] << " -h, aby uzyskac pomoc." << std::endl;
+			}
+		}
+
 		else
 		{
 			std::cout << red << "[SHELL]" << white << " - Niepoprawna liczba argumentow!" << std::endl;
