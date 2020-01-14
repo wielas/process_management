@@ -93,6 +93,9 @@ public:
 	PCB* find_process(const string& name);
 
 	void print_tree();
+	void toInit(Process_Tree* tree);
+	void kill(const int& pid);
+
 };
 
 //stworzyæ proces o podanym id operuj¹cy na podanym pliku

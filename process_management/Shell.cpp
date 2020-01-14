@@ -361,6 +361,29 @@ void Shell::run_function(std::vector<std::string> cmd)
 			std::cout << "          Wprowadz " << cmd[0] << " -h, aby uzyskac pomoc." << std::endl;
 		}
 	}
+
+	else if (cmd[0] == "ss") {
+		if (cmd.size() == 2) {
+			if (cmd[1] == "-h") {
+				cout << "\n" << cmd[0] << " " << "[nazwa_procesu][stan]\n";
+				cout << "\nDostepne stany: RUNNING, READY, SLEEPING, ZOMBIE \n";
+			}
+			else 
+			{
+				std::cout << red << "[SHELL]" << white << " - Niepoprawny argument!" << std::endl;
+				std::cout << "          Wprowadz " << cmd[0] << " -h, aby uzyskac pomoc." << std::endl;
+			}
+		}
+		if (cmd.size() == 3) {
+			cout << cmd[2] << endl;
+			if (cmd[2] == "RUNNING" || cmd[2] == "running") drzewko.find_process(cmd[1])->set_state(RUNNING);
+			if (cmd[2] == "READY" || cmd[2] == "ready") drzewko.find_process(cmd[1])->set_state(READY);
+			if (cmd[2] == "SLEEPING" || cmd[2] == "sleeping") drzewko.find_process(cmd[1])->set_state(SLEEPING);
+			if (cmd[2] == "ZOMBIE" || cmd[2] == "zombie") drzewko.find_process(cmd[1])->set_state(ZOMBIE);
+		}
+
+	}
+
 	//Zakonczenie procesu
 	else if (cmd[0] == "kill")
 	{
@@ -368,11 +391,11 @@ void Shell::run_function(std::vector<std::string> cmd)
 		{
 			if (cmd[1] == "-h")
 			{
-				std::cout << "\n" << cmd[0] << " " << "[nazwa_procesu]\n";
+				std::cout << "\n" << cmd[0] << " " << "[pid_procesu]\n";
 			}
 			else if (/*sprawdzenie poprawnosci nazwy procesu i czy mozna zakonczyc*/ running)
 			{
-				drzewko.find_process(cmd[1])->set_state(ZOMBIE);
+				drzewko.kill(stoi(cmd[1]));
 				//Usun proces
 			}
 			else if (/*nie mozna zakonczyc*/ running)

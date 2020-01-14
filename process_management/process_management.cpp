@@ -295,3 +295,46 @@ void Process_Tree::print_tree() {
 			i->print_tree();
 		}
 }
+
+void Process_Tree::toInit(Process_Tree* tree)
+{
+	int howmanykids1 = tree->children.size();
+
+	for (int j = 0; j < howmanykids1; j++)
+	{
+		children.push_back(tree->children[0]);
+		tree->children.erase(tree->children.begin());
+	}
+}
+
+void Process_Tree::kill(const int& pid)
+{
+	if (pid != 1)
+	{
+		int howmanykids = children.size();
+		for (int i = 0; i < howmanykids; i++)
+		{
+			//usuwanie jesli proces nie ma potomkow
+			if (children[i]->process.PID == pid && children[i]->children.size() == 0)
+			{
+				children.erase(children.begin() + i);
+				break;
+			}
+			else if (children[i]->process.PID == pid && children[i]->children.size() != 0)
+			{
+				toInit(children[i]);
+				children.erase(children.begin() + i);
+				break;
+			}
+			//usuwanie potomka dziecka inita
+			else if (children[i]->children.size() != 0)
+			{
+				children[i]->kill(pid);
+			}
+		}
+	}
+	else
+	{
+		std::cout <<  "Nie mozna usunac procesu Init" << std::endl;
+	}
+}
