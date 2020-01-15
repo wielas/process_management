@@ -3,9 +3,52 @@
 int available_pid = 2;
 vector<PCB*> PQ;
 vector<PCB*> SPQ;
+int depth = 0;
 
 void PCB::print() {
-	cout << "____________________" << endl;
+
+	for (int i = 0; i < depth; i++)
+	{
+		std::cout << char(196) << char(196) << char(196) << char(196) << char(196) << char(196);
+	}
+	std::cout << char(191) << " " << "PID: " << PID << std::endl;
+	for (int i = 0; i < depth; i++)
+	{
+		std::cout << char(196) << char(196) << char(196) << char(196) << char(196) << char(196);
+	}
+	std::cout << char(180) << " " << "Nazwa procesu: " << process_name << std::endl;
+	for (int i = 0; i < depth; i++)
+	{
+		std::cout << char(196) << char(196) << char(196) << char(196) << char(196) << char(196);
+	}
+	std::cout << char(180) << " " << "Priorytet: " << priority << std::endl;
+
+	if (program_instructions.size())
+	{
+		for (int i = 0; i < depth; i++)
+		{
+			std::cout << char(196) << char(196) << char(196) << char(196) << char(196) << char(196);
+		}
+		std::cout << char(180) << " " << "Nazwa pliku: " << program_instructions << std::endl;
+	}
+	for (int i = 0; i < depth; i++)
+	{
+		std::cout << char(196) << char(196) << char(196) << char(196) << char(196) << char(196);
+	}
+	std::cout << char(180) << " " << "Stan procesu: ";
+	if (this->status == 0) cout << " UNDECLARED" << endl;
+	if (this->status == 1) cout << " RUNNING" << endl;
+	if (this->status == 2) cout << " SLEEPING" << endl;
+	if (this->status == 3) cout << " ZOMBIE" << endl;
+	if (this->status == 4) cout << " INIT" << endl;
+	if (this->status == 5) cout << " READY" << endl;
+	for (int i = 0; i < depth; i++)
+	{
+		std::cout << char(196) << char(196) << char(196) << char(196) << char(196) << char(196);
+	}
+	std::cout << char(217) << " " << "Liczba rozkazow: " << done_task_num << endl << endl;
+
+	/*cout << "____________________" << endl;
 	cout << "PID = " << this->PID << endl;
 	cout << "Nazwa = " << this->process_name << endl;
 	if (this->status == 0) cout << "Status = UNDECLARED" << endl;
@@ -16,7 +59,7 @@ void PCB::print() {
 	if (this->status == 5) cout << "Status = READY" << endl;
 	cout << "Priorytet = " << this->priority << endl;
 	cout << "Nazwa pliku = " << this->program_instructions << endl;
-	cout << "____________________" << endl;
+	cout << "____________________" << endl;*/
 
 }
 
@@ -309,7 +352,9 @@ void Process_Tree::print_tree() {
 	if (children.size() > 0)
 		for (Process_Tree* i : children)
 		{
+			depth++;
 			i->print_tree();
+			depth--;
 		}
 }
 
