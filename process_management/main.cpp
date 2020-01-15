@@ -1,6 +1,7 @@
 #include "process_management.h"
 #include "procesor.h"
 #include "Shell.h"
+
 extern vector<PCB*> PQ;
 
 Process_Tree drzewko;
