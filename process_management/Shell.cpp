@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <sstream>
 #include <iterator>
+#include <fstream>
+#include <string>
 
 //paging m;
 extern Process_Tree drzewko;
@@ -321,17 +323,23 @@ void Shell::run_function(std::vector<std::string> cmd)
 		{
 			if(/*sprawdzenie poprawnosci nazwy pliku i procesu*/ running)
 			{
-				string plik = "PN A 5;DD B 5;JR A B [7];";
-				for (int i = 0; i < plik.length(); i++) {
-					paging::writeM(drzewko.process.PID, i, plik[i]);
+				ifstream plik1("./programy/" + cmd[2]);
+				string program = "";
+
+				while (!plik1.eof()) {
+					string order;
+					getline(plik1, order);
+					program += order;
+				}
+
+				for (int i = 0; i < program.length(); i++) {
+					paging::writeM(drzewko.process.PID, i, program[i]);
 				}
 				PCB super_proces{};
-				interpret(&drzewko.process);
-				interpret(&drzewko.process);
-				interpret(&drzewko.process);
-				interpret(&drzewko.process);
-				//interpret(&super_proces);
-				cout << read_register("B");
+				for (int i = 0; i < 3; i++) interpret(&drzewko.process);
+
+				cout << "B: " << read_register("B") << endl;
+
 				drzewko.fork(&drzewko.process, cmd[1], cmd[2]);
 
 			}

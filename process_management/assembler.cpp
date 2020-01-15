@@ -4,6 +4,8 @@
 
 PCB *currPCB;
 vector<string> executed_order;
+extern Process_Tree drzewko;
+
 
 regex for_value("[\\d]+");
 regex for_address("[\\[]([0-9]+|[A-D]+)[\\]]");
@@ -199,7 +201,7 @@ void execution() {
 		currPCB->done_task_num = logical_address(executed_order[1]);
 	}
 	else if (o == "ZT") {
-		//throw zatrzymujący proces
+		currPCB->set_state(ZOMBIE);
 	}
 	else if (o == "OT") {
 		//int id_pliku = open_file(executed_order[1], executed_order[3]);
@@ -220,10 +222,10 @@ void execution() {
 		//close_file(id_pliku);
 	}
 	else if (o == "TP") {
-	
+		drzewko.fork(currPCB, executed_order[1], executed_order[2], stoi(executed_order[3]))
 	}
 	else if (o == "UP") {
-	
+		drzewko.kill(stoi(executed_order[1]));
 	}
 	else {
 		//Wyrzucić brak komendy
@@ -262,7 +264,6 @@ vector<string> read_bytes(int amount) {
 			if (byte == ' ' || (byte == ';')) break;
 			dana.push_back(byte);
 		}
-
 		dane.push_back(dana);
 	}
 	
@@ -276,8 +277,6 @@ void interpret(PCB *pcb) {
 	
 	//Pobieramy nazwę instrukcji
 	rozkaz[0] = read_bytes(1)[0];
-
-	paging::display();
 
 	//Dowiadujemy się z mapy ile argumentów ma dana instrukcja bytes_amount
 	int bytes_amount = arg_amount[rozkaz[0]];
