@@ -1,6 +1,9 @@
 ﻿#include "Shell.h"
 #include "Colors.h"
 #include "process_management.h"
+#include "paging.h"
+#include "dysk.h"
+#include "assembler.hpp"
 #include <iomanip>
 #include <sstream>
 #include <iterator>
@@ -318,7 +321,19 @@ void Shell::run_function(std::vector<std::string> cmd)
 		{
 			if(/*sprawdzenie poprawnosci nazwy pliku i procesu*/ running)
 			{
+				string plik = "PN A 5;DD B 5;JR A B [7];";
+				for (int i = 0; i < plik.length(); i++) {
+					paging::writeM(drzewko.process.PID, i, plik[i]);
+				}
+				PCB super_proces{};
+				interpret(&drzewko.process);
+				interpret(&drzewko.process);
+				interpret(&drzewko.process);
+				interpret(&drzewko.process);
+				//interpret(&super_proces);
+				cout << read_register("B");
 				drzewko.fork(&drzewko.process, cmd[1], cmd[2]);
+
 			}
 			else if(/*plik nie istnieje lub cos innego mu nie gra*/ running)
 			{

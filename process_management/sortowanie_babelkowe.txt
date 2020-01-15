@@ -1,0 +1,29 @@
+OT "plik.txt" [0] 1
+OT "plik2.txt" [1] 0
+OP [0] [2] 8
+
+PN D 8
+
+c:
+PN A 0
+PN [10] D
+DK [10]
+JR A [10] .a
+
+PN B A	
+IK B
+JW [A] [B] .b
+a:
+DK D
+
+IK A
+JW D 1 .c
+
+ZP [1] [2] 8
+ZT
+
+b:
+PN [C] [A]
+PN [A] [B]
+PN [B] [C]
+SK .a
