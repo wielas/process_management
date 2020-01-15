@@ -4,6 +4,7 @@
 #include <math.h>
 
 extern vector<PCB*> PQ;
+extern vector<PCB*> SPQ;
 
 
 //class PCB
@@ -72,7 +73,14 @@ PCB* p1 = &p;
 
 void SetRunning()
 {
-
+	for (int j = 0; j < SPQ.size(); j++) {
+		if (SPQ[j]->status == READY) {
+			PQ.push_back(SPQ[j]);
+		}
+	}
+	for (int i = 0; i < PQ.size(); i++) {
+		PQ[i]->status = READY;
+	}
 	if (PQ.size() == 0)//jezeli nie ma zadnego procesu w kolejce uruchom INIT
 	{
 
@@ -213,7 +221,7 @@ void SetRunning()
 				std::cout << "[CFS] " << "RUNNING STILL THE SAME PROCESS, WITH PID: " << PQ[iteration]->PID << std::endl; //opis co sie wykonuje
 			}
 			running = PQ[iteration];//zapisanie obiektu ktoremu zostal przydzielony procesor w zmiennej wskaznikowej 
-			PQ[iteration]->set_state(RUNNING);//ustawic stan jako running
+			PQ[iteration]->status = RUNNING;//ustawic stan jako running
 			PQ[iteration]->set_done_task_num(1);
 			std::cout << "-------------------------------------------------------" << std::endl;
 		}
