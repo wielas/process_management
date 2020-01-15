@@ -14,7 +14,7 @@ int main() {
 	drzewko.fork(&drzewko.process, "flappy", "dumdum", 169);
 	drzewko.fork(&drzewko.children[0]->process, "flappy_son", "dumdum", 101);
 	drzewko.fork(&drzewko.process, "flappy_brother", "dumdum", 102);
-
+	
 	Shell s;
 	s.run();
 
