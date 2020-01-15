@@ -123,15 +123,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="assembler.cpp" />
+    <ClCompile Include="dysk.cpp" />
+    <ClCompile Include="iwezel.cpp" />
+    <ClCompile Include="katalog.cpp" />
+    <ClCompile Include="lock.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="paging.cpp" />
     <ClCompile Include="process_management.cpp" />
     <ClCompile Include="Shell.cpp" />
+    <ClCompile Include="tab_str_ram.cpp" />
+    <ClCompile Include="wpisKatalogowy.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assembler.hpp" />
     <ClInclude Include="Colors.h" />
+    <ClInclude Include="dysk.h" />
+    <ClInclude Include="iwezel.h" />
+    <ClInclude Include="katalog.h" />
+    <ClInclude Include="lock.h" />
+    <ClInclude Include="paging.h" />
     <ClInclude Include="procesor.h" />
     <ClInclude Include="process_management.h" />
     <ClInclude Include="Shell.h" />
+    <ClInclude Include="tab_str_ram.h" />
+    <ClInclude Include="wpisKatalogowy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

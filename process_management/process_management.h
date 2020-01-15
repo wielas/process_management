@@ -17,6 +17,7 @@ public:
 	int task_num;
 	int done_task_num;
 	float q;
+	int A = 0, B = 0, C = 0, D = 0;
 	
 	PCB() { 
 		this->PID = 0;
